@@ -19,6 +19,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Initializes the number of Go routines to be created based on the command line args.
 	if noRoutines == -1 {
 		noRoutines = runtime.NumCPU()
 	} else {
@@ -54,6 +55,8 @@ func calcPi(start, end int, step float64, channel chan float64) {
 	}
 	channel <- sum * step
 }
+
+// Functions that helps parsing the command line arguments.
 
 // Parses the command line arguments and checks for errors.
 // If there are no errors, returns the proper values, else returns an error.

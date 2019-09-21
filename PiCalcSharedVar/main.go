@@ -10,14 +10,14 @@ import (
 	"time"
 )
 
-// A struct that holds the calculated Pi in the result variable
-// and a mutex.
+// A struct that holds the calculated Pi in the result variable and a mutex
+// so that it cant be incremented safely.
 type sharedPi struct {
 	result float64
 	mux    sync.Mutex
 }
 
-// Global variable where the calculated Pi is stored
+// Global variable where the calculated Pi is stored.
 var pi sharedPi
 
 // Wait Group used to sunchronize the main Go routine with the others.
@@ -33,6 +33,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Initializes the number of Go routines to be created based on the command line args.
 	if noRoutines == -1 {
 		noRoutines = runtime.NumCPU()
 	} else {
@@ -56,6 +57,7 @@ func main() {
 
 }
 
+// Calculates pi and adds it to the field result.
 func calcPi(start, end int, step float64) {
 	sum := 0.0
 	for i := start; i < end; i++ {
@@ -67,6 +69,8 @@ func calcPi(start, end int, step float64) {
 	pi.mux.Unlock()
 	wg.Done()
 }
+
+// Functions that helps parsing the command line arguments.
 
 // Parses the command line arguments and checks for errors.
 // If there are no errors, returns the proper values, else returns an error.

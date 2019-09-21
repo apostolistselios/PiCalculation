@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-// Global variable where the calculated Pi is stored
+// Wait Group used to sunchronize the main Go routine with the others.
 var wg = sync.WaitGroup{}
 
 func main() {
@@ -23,6 +23,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Initializes the number of Go routines to be created based on the command line args.
 	if noRoutines == -1 {
 		noRoutines = runtime.NumCPU()
 	} else {
@@ -48,6 +49,7 @@ func main() {
 
 }
 
+// Calculates Pi and stores the result in the correct position in the results slice.
 func calcPi(start, end, i int, step float64, results []float64) {
 	sum := 0.0
 	for i := start; i < end; i++ {
@@ -58,6 +60,7 @@ func calcPi(start, end, i int, step float64, results []float64) {
 	wg.Done()
 }
 
+// Sums a slice/array and returns the result.
 func sum(arr []float64) float64 {
 	sum := 0.0
 	for _, v := range arr {
@@ -65,6 +68,8 @@ func sum(arr []float64) float64 {
 	}
 	return sum
 }
+
+// Functions that helps parsing the command line arguments.
 
 // Parses the command line arguments and checks for errors.
 // If there are no errors, returns the proper values, else returns an error.
